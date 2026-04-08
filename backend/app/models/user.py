@@ -1,0 +1,76 @@
+from sqlmodel import SQLModel, Field, Relationship
+from typing import Optional, List
+from datetime import datetime
+
+
+class Education(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(foreign_key="user.id", index=True)
+
+    uni_name: str
+    degree: str
+    major: str
+    country: str
+    state: Optional[str] = None
+    scholarship: Optional[str] = None
+    start_year: Optional[int] = None
+    end_year: Optional[int] = None
+
+    user: Optional["User"] = Relationship(back_populates="education")
+
+
+class Career(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    user_id: int = Field(foreign_key="user.id", index=True)
+
+    job_title: str
+    employer: str
+    job_field: str
+    country: str
+    state: Optional[str] = None
+    is_current: bool = False
+    start_year: Optional[int] = None
+    end_year: Optional[int] = None
+
+    user: Optional["User"] = Relationship(back_populates="career")
+
+
+class User(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+
+    # Auth
+    email: str = Field(unique=True, index=True)
+    hashed_password: Optional[str] = None
+    microsoft_id: Optional[str] = Field(default=None, index=True)
+    email_verified: bool = False
+    is_verified: bool = False  # manually verified by admin
+
+    # Basic info
+    first_name: str
+    last_name: str
+    kvis_year: Optional[int] = Field(default=None, index=True)
+
+    # Contact & social
+    facebook_url: Optional[str] = None
+    linkedin_url: Optional[str] = None
+    line_id: Optional[str] = None
+    website_url: Optional[str] = None
+
+    # Location
+    place: Optional[str] = None          # Display text e.g. "Bangkok, Thailand"
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
+    country: Optional[str] = Field(default=None, index=True)
+
+    # Profile
+    profile_pic_url: Optional[str] = None
+    bio: Optional[str] = None
+    mbti: Optional[str] = None           # e.g. "INTJ"
+    interests: Optional[str] = None      # comma-separated tags
+
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+
+    education: List[Education] = Relationship(back_populates="user")
+    career: List[Career] = Relationship(back_populates="user")
+    blogs: List["Blog"] = Relationship(back_populates="author")
