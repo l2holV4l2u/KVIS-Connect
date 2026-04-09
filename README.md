@@ -13,12 +13,34 @@ Alumni network for KVIS — built with Next.js 14, FastAPI, and PostgreSQL.
 
 ---
 
-## First-time setup
+## Quick Start — Mock backend (no Docker required)
+
+For local dev or sharing with others who don't have Docker. Uses a pre-seeded Express server with 12 mock alumni — no Python, no database needed.
+
+```bash
+# 1. Install frontend deps
+pnpm run install:fe
+
+# 2. Install mock server deps
+cd mock-server && npm install && cd ..
+
+# 3. Start mock server  →  http://localhost:8000
+pnpm run be:mock
+
+# 4. Start frontend (new terminal)  →  http://localhost:3000
+pnpm run fe
+```
+
+Mock alumni have realistic Thai names, DiceBear pixel-art avatars, MBTI, career history, and globe coordinates. All API endpoints are mirrored. Any `@kvis.ac.th` email + any password will log you in.
+
+---
+
+## Full setup (real backend)
 
 ### 1. Install dependencies
 
 ```bash
-# Backend
+# Backend (creates .venv, installs Python deps)
 pnpm run install:be
 
 # Frontend
@@ -78,6 +100,8 @@ API docs are available at [http://localhost:8000/docs](http://localhost:8000/doc
 
 ```
 kvis-connect/
+├── mock-server/              # Express mock backend (no Docker)
+│   └── index.js              # All API endpoints + 12 pre-seeded alumni
 ├── backend/                  # FastAPI + SQLModel
 │   ├── app/
 │   │   ├── core/             # Config, DB, security, deps
@@ -104,7 +128,8 @@ kvis-connect/
 | Command | Description |
 |---|---|
 | `pnpm run db` | Start PostgreSQL in Docker |
-| `pnpm run be` | Start FastAPI backend on `:8000` |
+| `pnpm run be` | Start FastAPI backend on `:8000` (requires Docker DB) |
+| `pnpm run be:mock` | Start mock Express backend on `:8000` (no Docker) |
 | `pnpm run fe` | Start Next.js frontend on `:3000` |
 | `pnpm run migrate` | Apply pending DB migrations |
 | `pnpm run migration "message"` | Create a new migration |
@@ -128,7 +153,7 @@ pnpm run migrate
 
 | Feature | Details |
 |---|---|
-| **Globe** | Interactive 3D globe on the landing page showing where alumni are located — click a pin to view their profile |
+| **Globe** | Interactive 3D globe with avatar pins, hover profile cards, country/province borders, real-time search bar in navbar, and filter panel that flies the globe to matched alumni |
 | **Directory** | Filter alumni by name, class year, country, education, and career — with sort by name / year / join date |
 | **Profile** | Name, class year, MBTI, bio, interests, location, education history, career history, social links |
 | **Blog** | Alumni can write Markdown posts with live preview, tag filtering, cover images |

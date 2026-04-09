@@ -116,3 +116,7 @@ class GlobePin(BaseModel):
     longitude: float
     place: Optional[str]
     kvis_year: Optional[int]
+    profile_pic_url: Optional[str]
+    mbti: Optional[str]
+    current_job: Optional[str]
+    country: Optional[str]

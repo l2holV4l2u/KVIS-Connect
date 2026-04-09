@@ -61,6 +61,10 @@ export interface GlobePin {
   longitude: number;
   place?: string;
   kvis_year?: number;
+  profile_pic_url?: string;
+  mbti?: string;
+  current_job?: string;
+  country?: string;
 }
 
 export interface BlogAuthor {

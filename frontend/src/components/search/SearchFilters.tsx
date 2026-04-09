@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ChevronDown, ChevronUp, Search, X } from "lucide-react";
 import { DEGREES, JOB_FIELDS, KVIS_YEARS } from "@/lib/constants/options";
@@ -51,14 +50,7 @@ export function SearchFilters({ values, onChange }: Props) {
   };
 
   return (
-    <Card className="sticky top-20">
-      <CardHeader className="pb-2">
-        <CardTitle className="text-base flex items-center gap-2">
-          <Search className="h-4 w-4" /> Filter Alumni
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-1">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-1">
           {/* Name */}
           <div className="space-y-1 pb-3">
             <Label className="text-xs text-muted-foreground uppercase tracking-wide">Name</Label>
@@ -139,13 +131,11 @@ export function SearchFilters({ values, onChange }: Props) {
           </Section>
 
           <div className="flex gap-2 pt-4">
-            <Button type="submit" className="flex-1">Search</Button>
+            <Button type="submit" variant="outline" className="flex-1 border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white transition-colors">Search</Button>
             <Button type="button" variant="outline" size="icon" onClick={handleClear} title="Clear filters">
               <X className="h-4 w-4" />
             </Button>
           </div>
-        </form>
-      </CardContent>
-    </Card>
+    </form>
   );
 }
